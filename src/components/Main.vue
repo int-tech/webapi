@@ -159,22 +159,24 @@ export default {
       console.log(this.picked)
       this.file = this.$refs.file.files[0]
     },
-    async getFile() {
-      let res = await axios.get(`${ENDPOINT}/image.png`, {
+    async getFile(file_name) {
+      let res_get = await axios.get(`${ENDPOINT}/${file_name}`, {
         responseType: 'blob'
       });
-      if ( res.status === 200) {
+
+      if ( res_get.status === 200) {
         var reader = new FileReader();
         reader.onloadend = function() {
           var img = document.getElementById("imgTest");
           img.src = reader.result;
         }
         // DataURLとして読み込む
-        reader.readAsDataURL(res.data);
+        reader.readAsDataURL(res_get.data);
       } else {
         alert('false')
       }
     },
+    async 
     async submitFile() {
       try {
         let formData = new FormData()
@@ -193,21 +195,23 @@ export default {
           alert('failed!')
         }
 
-        let res_get = await axios.get(`${ENDPOINT}/${this.file.name}`, {
-          responseType: 'blob'
-        });
+        this.getFile(this.file.name)
 
-        if ( res_get.status === 200) {
-          var reader = new FileReader();
-          reader.onloadend = function() {
-            var img = document.getElementById("imgTest");
-            img.src = reader.result;
-          }
-          // DataURLとして読み込む
-          reader.readAsDataURL(res_get.data);
-        } else {
-          alert('false')
-        }
+        // let res_get = await axios.get(`${ENDPOINT}/${this.file.name}`, {
+        //   responseType: 'blob'
+        // });
+        //
+        // if ( res_get.status === 200) {
+        //   var reader = new FileReader();
+        //   reader.onloadend = function() {
+        //     var img = document.getElementById("imgTest");
+        //     img.src = reader.result;
+        //   }
+        //   // DataURLとして読み込む
+        //   reader.readAsDataURL(res_get.data);
+        // } else {
+        //   alert('false')
+        // }
 
       // let res = await axios.get(`${ENDPOINT}/${this.file.name}`, {
       //   responseType: 'blob'
