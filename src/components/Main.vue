@@ -133,10 +133,39 @@
       <button class="positive ui button" v-on:click="submitFile()">Submit</button>
     <!-- </form> -->
 
-    <div class="response_image">
-      <!-- <img id="imgTest" src="../assets/logo.png"> -->
-      <img id="imgTest"/>
+    <div class="main_all_response_image">
+      <div class="response_image">
+        <img id="imgTest_0"/>
+      </div>
+      <div class="response_image">
+        <img id="imgTest_1"/>
+      </div>
+      <div class="response_image">
+        <img id="imgTest_2"/>
+      </div>
+      <div class="response_image">
+        <img id="imgTest_3"/>
+      </div>
+      <div class="response_image">
+        <img id="imgTest_4"/>
+      </div>
+      <div class="response_image">
+        <img id="imgTest_5"/>
+      </div>
+      <div class="response_image">
+        <img id="imgTest_6"/>
+      </div>
+      <div class="response_image">
+        <img id="imgTest_7"/>
+      </div>
+      <div class="response_image">
+        <img id="imgTest_8"/>
+      </div>
+      <div class="response_image">
+        <img id="imgTest_9"/>
+      </div>
     </div>
+
 
   </div>
 </template>
@@ -159,7 +188,8 @@ export default {
       console.log(this.picked)
       this.file = this.$refs.file.files[0]
     },
-    async getFile(file_name) {
+    async getFile(file_name, num) {
+      console.log(file_name)
       let res_get = await axios.get(`${ENDPOINT}/${file_name}`, {
         responseType: 'blob'
       });
@@ -167,7 +197,7 @@ export default {
       if ( res_get.status === 200) {
         var reader = new FileReader();
         reader.onloadend = function() {
-          var img = document.getElementById("imgTest");
+          var img = document.getElementById(`imgTest_${num}`);
           img.src = reader.result;
         }
         // DataURLとして読み込む
@@ -194,39 +224,12 @@ export default {
           alert('failed!')
         }
 
-        this.getFile(this.file.name)
+        for (let i =0; i<10; i++) {
+          const file_name_array = this.file.name.split('.')
+          const request_file = `${file_name_array[0]}_gen_${i}.png`
+          this.getFile(request_file, i)
+        }
 
-        // let res_get = await axios.get(`${ENDPOINT}/${this.file.name}`, {
-        //   responseType: 'blob'
-        // });
-        //
-        // if ( res_get.status === 200) {
-        //   var reader = new FileReader();
-        //   reader.onloadend = function() {
-        //     var img = document.getElementById("imgTest");
-        //     img.src = reader.result;
-        //   }
-        //   // DataURLとして読み込む
-        //   reader.readAsDataURL(res_get.data);
-        // } else {
-        //   alert('false')
-        // }
-
-      // let res = await axios.get(`${ENDPOINT}/${this.file.name}`, {
-      //   responseType: 'blob'
-      // })
-      // let res = await axios.get(`${ENDPOINT}/${this.file.name}`)
-
-      // if (res.status !== 200) {
-      //   throw new Error('response error: failed to get image')
-      // }
-
-      // var img = document.getElementById("imgTest");
-      // var url = window.URL || window.webkitURL;
-      // // document.querySelector("#imgTest").src = url.createObjectURL(res.data)
-      // const blob_url = url.createObjectURL(res.data)
-      // console.log(blob_url)
-      // alert(blob_url)
       } catch (e) {
         throw new Exception(e)
       }
@@ -237,9 +240,10 @@ export default {
 
 <style>
   .main{
-    width:50%;
+    width:80%;
     margin: 50px auto;
     text-align:left;
+    /* border: 1px solid green; */
   }
   .main_file{
     width: 50%;
@@ -250,9 +254,16 @@ export default {
     width: 50%;
     margin: 30px 0px;
   }
+  .main_all_response_image{
+    margin:10px 0px;
+    width: 100%;
+    /* border:1px solid blue; */
+    overflow: hidden;
+  }
   .response_image{
-    width:400px;
-    height:400px;
+    float: left;
+    width:25%;
+    /* border:1px solid red; */
   }
   .response_image img{
     width:100%;
