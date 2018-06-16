@@ -176,7 +176,6 @@ export default {
         alert('false')
       }
     },
-    async 
     async submitFile() {
       try {
         let formData = new FormData()
