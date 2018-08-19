@@ -171,8 +171,7 @@
 </template>
 
 <script>
-// const ENDPOINT = 'http://127.0.0.1:3000';
-const ENDPOINT = 'http://54.201.208.182:3000';
+const ENDPOINT = ''; // set specific URI
 const axios = require('axios')
 export default {
   name: 'Main',
